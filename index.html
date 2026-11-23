@@ -90,27 +90,37 @@ $('export').onclick=async()=>{
    const {FFmpeg}=await import('https://cdn.jsdelivr.net/npm/@ffmpeg/ffmpeg@0.12.10/dist/esm/index.js');
    const {toBlobURL}=await import('https://cdn.jsdelivr.net/npm/@ffmpeg/util@0.12.1/dist/esm/index.js');
    ffmpeg=new FFmpeg();ffmpeg.on('progress',({progress})=>{bar.style.width=Math.max(5,Math.min(95,progress*100))+'%';log('Encoding video… '+Math.round(progress*100)+'%')});
-   const base='https://cdn.jsdelivr.net/npm/@ffmpeg/core@0.12.6/dist/esm';
-   await ffmpeg.load({coreURL:await toBlobURL(base+'/ffmpeg-core.js','text/javascript'),wasmURL:await toBlobURL(base+'/ffmpeg-core.wasm','application/wasm')});
-  }
-  const {fetchFile}=await import('https://cdn.jsdelivr.net/npm/@ffmpeg/util@0.12.1/dist/esm/index.js');
-  const inputName='input-video';const outputName='clips-io-export.mp4';
-  await ffmpeg.writeFile(inputName,await fetchFile(file));bar.style.width='12%';log('Preparing clip…');
-  const args=['-ss',String(a),'-i',inputName,'-t',String(b-a)];
-  const ratio=$('ratio').value;
-  const filters={'9:16':"scale=720:1280:force_original_aspect_ratio=decrease,pad=720:1280:(ow-iw)/2:(oh-ih)/2",'1:1':"scale=1080:1080:force_original_aspect_ratio=decrease,pad=1080:1080:(ow-iw)/2:(oh-ih)/2",'16:9':"scale=1280:720:force_original_aspect_ratio=decrease,pad=1280:720:(ow-iw)/2:(oh-ih)/2",'4:5':"scale=864:1080:force_original_aspect_ratio=decrease,pad=864:1080:(ow-iw)/2:(oh-ih)/2"};
-  if(filters[ratio])args.push('-vf',filters[ratio]);
-  if($('mute').checked)args.push('-an');
-  args.push('-c:v','libx264','-preset','ultrafast','-crf',$('quality').value,'-pix_fmt','yuv420p');
-  if(!$('mute').checked)args.push('-c:a','aac','-b:a','128k');
-  args.push('-movflags','+faststart',outputName);
-  await ffmpeg.exec(args);
-  const data=await ffmpeg.readFile(outputName);const blob=new Blob([data.buffer],{type:'video/mp4'});
-  const url=URL.createObjectURL(blob),link=document.createElement('a');link.href=url;link.download=(($('filename').value.trim()||'clips-io-highlight').replace(/[^\w-]+/g,'-'))+'.mp4';link.click();
-  setTimeout(()=>URL.revokeObjectURL(url),60000);bar.style.width='100%';status('Export complete');log('Your clip has been exported. Check your Downloads folder.');
-  await ffmpeg.deleteFile(inputName);await ffmpeg.deleteFile(outputName);
- }catch(err){console.error(err);status('Export issue');log('Export failed. Try a shorter or smaller video, or use a desktop browser. '+(err?.message||''))}
- finally{btn.disabled=false}
-};
-</script>
-</body></html>
+   
+const base = 'https://cdn.jsdelivr.net/npm/@ffmpeg/core@0.12.6/dist/esm';
+const workerBase = 'https://cdn.jsdelivr.net/npm/@ffmpeg/ffmpeg@0.12.10/dist/esm';
+
+const workerResponse = await fetch(workerBase + '/worker.js');
+
+if (!workerResponse.ok) {
+  throw new Error('Could not download FFmpeg worker.');
+}
+
+let workerSource = await workerResponse.text();
+
+workerSource = workerSource.replace(
+  /from\s+(['"])\.\//g,
+  'from $1' + workerBase + '/'
+);
+
+const workerBlob = URL.createObjectURL(
+  new Blob([workerSource], { type: 'text/javascript' })
+);
+
+await ffmpeg.load({
+  classWorkerURL: workerBlob,
+  coreURL: await toBlobURL(
+    base + '/ffmpeg-core.js',
+    'text/javascript'
+  ),
+  wasmURL: await toBlobURL(
+    base + '/ffmpeg-core.wasm',
+    'application/wasm'
+  )
+});
+
+URL.revokeObjectURL(workerBlob);
