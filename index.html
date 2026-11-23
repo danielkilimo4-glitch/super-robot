@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Clips.io | Creator Studio</title>
+<style>
+:root{--bg:#090b0a;--panel:#111512;--panel2:#171d19;--line:#263129;--text:#eef5ef;--muted:#91a096;--lime:#c7ff4a;--lime2:#a8e52f;--red:#ff6969}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 50% -20%,#1b2a1d 0,transparent 50%),var(--bg);color:var(--text);font:14px/1.45 Inter,system-ui,Arial,sans-serif}
+button,input,select{font:inherit}button{cursor:pointer;border:1px solid var(--line);border-radius:10px;background:#1a211c;color:var(--text);padding:10px 13px;font-weight:650}button:hover{border-color:#78934b}button.primary{background:var(--lime);border-color:var(--lime);color:#10150b}button:disabled{opacity:.45;cursor:not-allowed}
+.top{height:68px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 24px;position:sticky;top:0;background:#090d0beF;backdrop-filter:blur(14px);z-index:5}
+.brand{display:flex;align-items:center;gap:10px;font-size:18px;font-weight:850;letter-spacing:-.5px}.mark{width:28px;height:28px;border-radius:8px;background:var(--lime);color:#111;display:grid;place-items:center;font-weight:950}.brand span{color:var(--lime)}.topright{display:flex;align-items:center;gap:10px}.status{color:var(--muted);font-size:12px}.avatar{width:32px;height:32px;border-radius:50%;display:grid;place-items:center;background:#273329;color:var(--lime);font-weight:800}
+.shell{max-width:1450px;margin:auto;padding:24px}.heading{display:flex;justify-content:space-between;align-items:flex-end;gap:20px;margin-bottom:22px}.eyebrow{color:var(--lime);font-size:11px;letter-spacing:1.7px;font-weight:800;text-transform:uppercase}.heading h1{font-size:clamp(25px,4vw,36px);letter-spacing:-1.3px;margin:5px 0}.heading p{margin:0;color:var(--muted)}.grid{display:grid;grid-template-columns:minmax(0,1.65fr) minmax(290px,.85fr);gap:18px}.panel{background:linear-gradient(145deg,#141a16,#0f1311);border:1px solid var(--line);border-radius:16px;overflow:hidden}.panelhead{padding:16px 18px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between}.panelhead h2{font-size:14px;margin:0}.panelbody{padding:18px}.drop{border:1px dashed #50614f;border-radius:14px;min-height:150px;display:grid;place-items:center;text-align:center;padding:24px;background:#111812;transition:.2s}.drop.drag{border-color:var(--lime);background:#1b2717}.drop strong{display:block;font-size:16px;margin:7px 0}.drop p{margin:0 0 13px;color:var(--muted);font-size:12px}.drop .uploadicon{font-size:26px;color:var(--lime)}#file{display:none}
+.preview{position:relative;background:#030504;border-radius:12px;overflow:hidden;min-height:220px;display:grid;place-items:center;margin-top:14px}.preview video{display:none;max-width:100%;max-height:430px;background:#000}.placeholder{color:#718078;text-align:center;padding:28px}.previewbar{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:12px;color:var(--muted);font-size:12px}.timeline{margin-top:18px}.timelinehead{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}.timelinehead strong{font-size:13px}.track{height:13px;border-radius:99px;background:#28312a;position:relative;overflow:hidden}.selected{position:absolute;height:100%;background:var(--lime);left:0;width:100%;border-radius:99px}.range{width:100%;accent-color:var(--lime);margin:14px 0 4px}.timeinputs{display:grid;grid-template-columns:1fr 1fr;gap:10px}.field label{display:block;color:var(--muted);font-size:11px;margin-bottom:6px}.field input,.field select{width:100%;background:#0b100d;border:1px solid var(--line);color:var(--text);padding:10px;border-radius:9px;min-width:0}.rowbtn{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}.rowbtn button{font-size:12px;padding:9px 11px}.side{display:flex;flex-direction:column;gap:18px}.setting{display:grid;gap:14px}.hint{font-size:11px;color:var(--muted);margin-top:5px}.toggleline{display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-top:1px solid var(--line)}.toggleline input{accent-color:var(--lime);width:17px;height:17px}.export{width:100%;margin-top:4px;padding:13px}.progress{height:7px;background:#29332b;border-radius:20px;overflow:hidden;margin-top:12px;display:none}.progress span{display:block;height:100%;width:0;background:var(--lime);transition:width .2s}.log{font-size:11px;color:var(--muted);margin-top:8px;min-height:16px}.tips{color:var(--muted);font-size:12px;line-height:1.6}.tips b{color:var(--text)}.foot{color:#6e7b72;text-align:center;font-size:11px;padding:24px 0 8px}
+@media(max-width:850px){.grid{grid-template-columns:1fr}.shell{padding:16px}.top{padding:0 16px}.heading{align-items:flex-start;flex-direction:column}.topright .status{display:none}}
+</style>
+</head>
+<body>
+<header class="top"><div class="brand"><div class="mark">C</div>clips<span>.io</span></div><div class="topright"><div class="status" id="appStatus">Ready for a new project</div><div class="avatar">C</div></div></header>
+<main class="shell">
+<section class="heading"><div><div class="eyebrow">Creator workspace</div><h1>Turn long videos into <span style="color:var(--lime)">great clips.</span></h1><p>Import a video, trim the moment, choose a format and export.</p></div><button id="newProject">＋ New project</button></section>
+<div class="grid">
+<section class="panel">
+ <div class="panelhead"><h2>01 / Media & preview</h2><span class="status" id="mediaName">No media selected</span></div>
+ <div class="panelbody">
+  <div class="drop" id="drop"><div><div class="uploadicon">⇧</div><strong>Drop your video here</strong><p>or choose a file from your device. Processing stays in your browser.</p><button class="primary" id="choose">Choose video</button><input id="file" type="file" accept="video/*"></div></div>
+  <div class="preview" id="preview"><div class="placeholder" id="placeholder">Your video preview will appear here</div><video id="video" controls playsinline></video></div>
+  <div class="previewbar"><span id="durationLabel">Duration: --:--</span><span id="playheadLabel">Playhead: 00:00</span></div>
+  <div class="timeline"><div class="timelinehead"><strong>02 / Clip timeline</strong><span class="status" id="clipLength">Clip length: --</span></div><div class="track"><div class="selected" id="selected"></div></div>
+   <input class="range" id="seek" type="range" min="0" max="100" value="0" step=".1" aria-label="Seek video">
+   <div class="timeinputs"><div class="field"><label for="start">START TIME (SECONDS)</label><input id="start" type="number" min="0" step=".1" value="0"></div><div class="field"><label for="end">END TIME (SECONDS)</label><input id="end" type="number" min="0" step=".1" value="0"></div></div>
+   <div class="rowbtn"><button id="setStart">Set start at playhead</button><button id="setEnd">Set end at playhead</button><button id="resetTrim">Reset trim</button></div>
+  </div>
+ </div>
+</section>
+<aside class="side">
+<section class="panel"><div class="panelhead"><h2>03 / Export settings</h2><span class="status">Customize</span></div><div class="panelbody setting">
+ <div class="field"><label for="ratio">ASPECT RATIO</label><select id="ratio"><option value="original">Original video</option><option value="9:16">9:16 · TikTok / Reels / Shorts</option><option value="1:1">1:1 · Square</option><option value="16:9">16:9 · YouTube</option><option value="4:5">4:5 · Feed portrait</option></select><div class="hint">The selected format is applied to the exported video.</div></div>
+ <div class="field"><label for="quality">EXPORT QUALITY</label><select id="quality"><option value="18">High quality</option><option value="23" selected>Balanced</option><option value="28">Smaller file</option></select></div>
+ <div class="field"><label for="filename">FILE NAME</label><input id="filename" value="clips-io-highlight" maxlength="60"></div>
+ <div class="toggleline"><span>Mute exported clip</span><input type="checkbox" id="mute"></div>
+ <button class="primary export" id="export" disabled>Export clip ↗</button>
+ <div class="progress" id="progress"><span id="progressBar"></span></div><div class="log" id="log">Choose a video to enable export.</div>
+</div></section>
+<section class="panel"><div class="panelhead"><h2>Quick workflow</h2></div><div class="panelbody tips"><b>1.</b> Upload a video from your device.<br><b>2.</b> Play or seek to find the moment you want.<br><b>3.</b> Set the start and end points in seconds.<br><b>4.</b> Choose a platform format and export.<p style="margin-bottom:0">Large videos may take longer and can exceed the memory available on some phones.</p></div></section>
+</aside>
+</div><div class="foot">Clips.io Creator Studio · Browser-based editing · Your source video is not uploaded to a server</div>
+</main>
+<script type="module">
+const $=id=>document.getElementById(id);
+const video=$('video'), fileInput=$('file');
+let objectUrl=null,duration=0,ffmpeg=null,loaded=false;
+const fmt=s=>{if(!Number.isFinite(s))return'00:00';let m=Math.floor(s/60),sec=Math.floor(s%60);return String(m).padStart(2,'0')+':'+String(sec).padStart(2,'0')};
+const status=t=>$('appStatus').textContent=t;
+const log=t=>$('log').textContent=t;
+function updateTrim(){
+ let a=Math.max(0,Math.min(duration,Number($('start').value)||0));
+ let b=Math.max(a,Math.min(duration,Number($('end').value)||0));
+ $('start').value=a.toFixed(1);$('end').value=b.toFixed(1);
+ let left=duration?a/duration*100:0,width=duration?(b-a)/duration*100:100;
+ $('selected').style.left=left+'%';$('selected').style.width=width+'%';
+ $('clipLength').textContent='Clip length: '+fmt(b-a);
+}
+function loadFile(file){
+ if(!file||!file.type.startsWith('video/')){log('Please select a valid video file.');return}
+ if(objectUrl)URL.revokeObjectURL(objectUrl);
+ objectUrl=URL.createObjectURL(file);video.src=objectUrl;video.style.display='block';$('placeholder').style.display='none';
+ $('mediaName').textContent=file.name;$('filename').value=file.name.replace(/\.[^.]+$/,'').slice(0,50)+'-clip';
+ $('export').disabled=false;status('Video loaded');
+}
+$('choose').onclick=()=>fileInput.click();
+fileInput.onchange=e=>loadFile(e.target.files[0]);
+$('drop').ondragover=e=>{e.preventDefault();$('drop').classList.add('drag')};
+$('drop').ondragleave=()=> $('drop').classList.remove('drag');
+$('drop').ondrop=e=>{e.preventDefault();$('drop').classList.remove('drag');loadFile(e.dataTransfer.files[0])};
+video.onloadedmetadata=()=>{duration=video.duration||0;$('durationLabel').textContent='Duration: '+fmt(duration);$('end').value=duration.toFixed(1);$('seek').max=duration;$('seek').value=0;updateTrim()};
+video.ontimeupdate=()=>{if(duration){$('seek').value=video.currentTime;$('playheadLabel').textContent='Playhead: '+fmt(video.currentTime)}};
+$('seek').oninput=()=>{video.currentTime=Number($('seek').value)};
+$('setStart').onclick=()=>{$('start').value=video.currentTime.toFixed(1);updateTrim()};
+$('setEnd').onclick=()=>{$('end').value=video.currentTime.toFixed(1);updateTrim()};
+$('start').onchange=updateTrim;$('end').onchange=updateTrim;
+$('resetTrim').onclick=()=>{$('start').value=0;$('end').value=duration;updateTrim()};
+$('newProject').onclick=()=>{fileInput.value='';if(objectUrl)URL.revokeObjectURL(objectUrl);objectUrl=null;video.pause();video.removeAttribute('src');video.load();video.style.display='none';$('placeholder').style.display='block';$('mediaName').textContent='No media selected';$('durationLabel').textContent='Duration: --:--';$('playheadLabel').textContent='Playhead: 00:00';$('start').value=0;$('end').value=0;$('export').disabled=true;duration=0;updateTrim();status('Ready for a new project');log('Choose a video to enable export.')};
+$('export').onclick=async()=>{
+ const file=fileInput.files[0];if(!file){log('Choose a video first.');return}
+ const a=Number($('start').value),b=Number($('end').value);
+ if(!(b>a)){log('End time must be greater than start time.');return}
+ const btn=$('export'),bar=$('progressBar');btn.disabled=true;$('progress').style.display='block';bar.style.width='4%';status('Preparing export');log('Loading browser video engine. First export needs an internet connection.');
+ try{
+  if(!ffmpeg){
+   const {FFmpeg}=await import('https://cdn.jsdelivr.net/npm/@ffmpeg/ffmpeg@0.12.10/dist/esm/index.js');
+   const {toBlobURL}=await import('https://cdn.jsdelivr.net/npm/@ffmpeg/util@0.12.1/dist/esm/index.js');
+   ffmpeg=new FFmpeg();ffmpeg.on('progress',({progress})=>{bar.style.width=Math.max(5,Math.min(95,progress*100))+'%';log('Encoding video… '+Math.round(progress*100)+'%')});
+   const base='https://cdn.jsdelivr.net/npm/@ffmpeg/core@0.12.6/dist/esm';
+   await ffmpeg.load({coreURL:await toBlobURL(base+'/ffmpeg-core.js','text/javascript'),wasmURL:await toBlobURL(base+'/ffmpeg-core.wasm','application/wasm')});
+  }
+  const {fetchFile}=await import('https://cdn.jsdelivr.net/npm/@ffmpeg/util@0.12.1/dist/esm/index.js');
+  const inputName='input-video';const outputName='clips-io-export.mp4';
+  await ffmpeg.writeFile(inputName,await fetchFile(file));bar.style.width='12%';log('Preparing clip…');
+  const args=['-ss',String(a),'-i',inputName,'-t',String(b-a)];
+  const ratio=$('ratio').value;
+  const filters={'9:16':"scale=720:1280:force_original_aspect_ratio=decrease,pad=720:1280:(ow-iw)/2:(oh-ih)/2",'1:1':"scale=1080:1080:force_original_aspect_ratio=decrease,pad=1080:1080:(ow-iw)/2:(oh-ih)/2",'16:9':"scale=1280:720:force_original_aspect_ratio=decrease,pad=1280:720:(ow-iw)/2:(oh-ih)/2",'4:5':"scale=864:1080:force_original_aspect_ratio=decrease,pad=864:1080:(ow-iw)/2:(oh-ih)/2"};
+  if(filters[ratio])args.push('-vf',filters[ratio]);
+  if($('mute').checked)args.push('-an');
+  args.push('-c:v','libx264','-preset','ultrafast','-crf',$('quality').value,'-pix_fmt','yuv420p');
+  if(!$('mute').checked)args.push('-c:a','aac','-b:a','128k');
+  args.push('-movflags','+faststart',outputName);
+  await ffmpeg.exec(args);
+  const data=await ffmpeg.readFile(outputName);const blob=new Blob([data.buffer],{type:'video/mp4'});
+  const url=URL.createObjectURL(blob),link=document.createElement('a');link.href=url;link.download=(($('filename').value.trim()||'clips-io-highlight').replace(/[^\w-]+/g,'-'))+'.mp4';link.click();
+  setTimeout(()=>URL.revokeObjectURL(url),60000);bar.style.width='100%';status('Export complete');log('Your clip has been exported. Check your Downloads folder.');
+  await ffmpeg.deleteFile(inputName);await ffmpeg.deleteFile(outputName);
+ }catch(err){console.error(err);status('Export issue');log('Export failed. Try a shorter or smaller video, or use a desktop browser. '+(err?.message||''))}
+ finally{btn.disabled=false}
+};
+</script>
+</body></html>
